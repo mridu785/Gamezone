@@ -1,0 +1,2625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GameZone — Play Free Online Web Games</title>
+  <meta name="description" content="Discover, search, and launch premium online games instantly. Fast, free, mobile-optimized HTML5 games directly in your browser.">
+  <meta name="theme-color" content="#0d111a">
+  <link rel="canonical" href="https://mridu785.github.io/gamezone/">
+  
+  <!-- Open Graph / Social Meta -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GameGameZone — Premium Online Gaming Portal">
+  <meta property="og:description" content="Play the best curated HTML5 arcade, action, and puzzle games instantly on any device.">
+  <meta property="og:image" content="https://i.ibb.co/placeholder/gamezone-social.png">
+
+  <!-- Inline Vector Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23121826'/><path d='M30 45 L45 30 L70 55 L55 70 Z' fill='%233b82f6'/><circle cx='42' cy='42' r='8' fill='%2306b6d4'/><circle cx='68' cy='68' r='6' fill='%238b5cf6'/><path d='M25 65 L40 50' stroke='%2306b6d4' stroke-width='6' stroke-linecap='round'/></svg>">
+
+  <style>
+    /* ==========================================================================
+       1. CSS VARIABLES & DESIGN SYSTEM (Dark Gaming Interface)
+       ========================================================================== */
+    :root {
+      --bg-main: #0b0e17;
+      --bg-surface: #121826;
+      --bg-card: #182032;
+      --bg-card-hover: #1f2a42;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-focus: #3b82f6;
+
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --primary-glow: rgba(59, 130, 246, 0.35);
+
+      --accent-cyan: #06b6d4;
+      --accent-purple: #8b5cf6;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.7);
+
+      --transition-fast: 0.15s ease;
+      --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      --max-width: 1280px;
+      --header-height: 70px;
+    }
+
+    /* Reset & Base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-tap-highlight-color: transparent;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
+      color: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color var(--transition-fast), transform var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 2px solid var(--accent-cyan);
+      outline-offset: 2px;
+    }
+
+    input, select {
+      font: inherit;
+      color: inherit;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.65rem 1rem;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Icons via inline SVG helpers */
+    .icon {
+      width: 1.2em;
+      height: 1.2em;
+      fill: currentColor;
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       2. HEADER & NAVIGATION
+       ========================================================================== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      height: var(--header-height);
+      background: rgba(11, 14, 23, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 800;
+      font-size: 1.35rem;
+      letter-spacing: -0.5px;
+      color: var(--text-main);
+    }
+
+    .brand-icon {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--primary), var(--accent-cyan));
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+
+    .brand-text span {
+      color: var(--accent-cyan);
+    }
+
+    .desktop-nav {
+      display: none;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color var(--transition-fast);
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-main);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent-cyan);
+      border-radius: var(--radius-full);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .mobile-menu-btn {
+      display: flex;
+      padding: 0.5rem;
+      border-radius: var(--radius-sm);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-normal);
+    }
+
+    .mobile-drawer-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      width: 280px;
+      height: 100%;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border-color);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      transition: transform var(--transition-normal);
+      overflow-y: auto;
+    }
+
+    .mobile-drawer.open {
+      transform: translateX(-280px);
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .drawer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .drawer-nav a {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 0.4rem 0;
+    }
+
+    .drawer-nav a.active, .drawer-nav a:hover {
+      color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       3. HERO SECTION (Dynamic Featured Game / Carousel)
+       ========================================================================== */
+    .hero-section {
+      padding: 1.5rem 0 2rem;
+    }
+
+    .hero-banner {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      min-height: 340px;
+      display: flex;
+      align-items: flex-end;
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.38;
+      filter: blur(1px);
+      transition: transform 0.6s ease;
+    }
+
+    .hero-banner:hover .hero-bg {
+      transform: scale(1.02);
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(11, 14, 23, 0.1) 0%, rgba(11, 14, 23, 0.75) 55%, rgba(11, 14, 23, 0.98) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem;
+      width: 100%;
+      max-width: 650px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #93c5fd;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-size: 1.75rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 0.65rem;
+      color: var(--text-main);
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .hero-controls {
+      position: absolute;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      z-index: 3;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .hero-ctrl-btn {
+      background: rgba(18, 24, 38, 0.8);
+      border: 1px solid var(--border-color);
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-ctrl-btn:hover {
+      background: var(--primary);
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 0.65rem 1.25rem;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 0.9rem;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 14px var(--primary-glow);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+      border-radius: var(--radius-sm);
+    }
+
+    /* ==========================================================================
+       4. ADVERTISING SLOTS (ISOLATED & NON-INTRUSIVE)
+       ========================================================================== */
+    .ad-slot-wrapper {
+      width: 100%;
+      margin: 1.5rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .ad-container {
+      width: 100%;
+      max-width: 728px;
+      min-height: 90px;
+      background: rgba(18, 24, 38, 0.4);
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .ad-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-dim);
+      margin-bottom: 0.25rem;
+    }
+
+    .ad-placeholder-text {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    .ad-slot-header { margin: 0.5rem 0 1rem; }
+    .ad-slot-hero { margin-top: 1rem; }
+    .ad-slot-catalogue { margin: 2rem 0; }
+    .ad-slot-footer { margin: 2rem 0; }
+
+    /* ==========================================================================
+       5. SEARCH, FILTER & CATALOGUE CONTROLS
+       ========================================================================== */
+    .search-filter-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .search-bar-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-direction: column;
+      margin-bottom: 1rem;
+    }
+
+    .search-input-wrapper {
+      position: relative;
+      flex: 1;
+    }
+
+    .search-icon-inside {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding-left: 2.75rem;
+      padding-right: 2.5rem;
+      height: 46px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      font-size: 0.95rem;
+    }
+
+    .search-input:focus {
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+    }
+
+    .clear-search-btn {
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-dim);
+      padding: 0.25rem;
+      display: none;
+    }
+
+    .clear-search-btn.visible {
+      display: block;
+    }
+
+    .sort-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-width: 170px;
+    }
+
+    .sort-select {
+      height: 46px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    /* Category horizontal scroll navigation */
+    .categories-bar-wrapper {
+      position: relative;
+      margin-bottom: 1.25rem;
+    }
+
+    .categories-nav {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding-bottom: 0.25rem;
+    }
+
+    .categories-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .category-chip {
+      white-space: nowrap;
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .category-chip:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-main);
+    }
+
+    .category-chip.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px var(--primary-glow);
+    }
+
+    .results-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    /* ==========================================================================
+       6. GAME CATALOGUE GRID (2 Columns on mobile, Responsive)
+       ========================================================================== */
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.9rem;
+    }
+
+    @media (min-width: 680px) {
+      .games-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .games-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    /* Game Card */
+    .game-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+      user-select: none;
+    }
+
+    .game-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: var(--shadow-md);
+    }
+
+    .game-card:active {
+      transform: scale(0.98);
+    }
+
+    .card-thumb-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 68%; /* Consistent aspect ratio ~ 16:10 */
+      background: #0f1523;
+      overflow: hidden;
+    }
+
+    .card-thumb {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .game-card:hover .card-thumb {
+      transform: scale(1.05);
+    }
+
+    .card-badges {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      z-index: 2;
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: var(--radius-sm);
+      letter-spacing: 0.4px;
+      line-height: 1;
+    }
+
+    .badge-featured {
+      background: var(--accent-amber);
+      color: #000;
+    }
+
+    .badge-new {
+      background: var(--accent-green);
+      color: #000;
+    }
+
+    .badge-coming {
+      background: var(--accent-red);
+      color: #fff;
+    }
+
+    .card-fav-btn {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      z-index: 2;
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-full);
+      background: rgba(11, 14, 23, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform var(--transition-fast), background-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    .card-fav-btn.favorited {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+
+    .card-body {
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-category {
+      font-size: 0.7rem;
+      color: var(--accent-cyan);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.35;
+      margin-top: auto;
+    }
+
+    /* Empty States */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 3.5rem 1rem;
+      background: var(--bg-surface);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .empty-icon {
+      font-size: 2.5rem;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+    }
+
+    .empty-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-subtitle {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 380px;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Sections: Recently Played, Favourites, Catalogue */
+    .section-block {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ==========================================================================
+       7. DETAILS MODAL & PLAYER MODAL
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-normal);
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-dialog {
+      background: var(--bg-surface);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.95);
+      transition: transform var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .modal-backdrop.active .modal-dialog {
+      transform: scale(1);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 0.85rem;
+      right: 0.85rem;
+      z-index: 10;
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      background: rgba(11, 14, 23, 0.7);
+      border: 1px solid var(--border-color);
+      color: #fff;
+    }
+
+    .modal-close-btn:hover {
+      background: var(--accent-red);
+    }
+
+    .modal-hero-cover {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      background: #0f1523;
+    }
+
+    .modal-cover-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-cover-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 40%, var(--bg-surface) 100%);
+    }
+
+    .modal-content-body {
+      padding: 1.5rem;
+    }
+
+    .modal-header-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .modal-category {
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-top: 0.2rem;
+    }
+
+    .modal-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .modal-section-h {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: var(--text-main);
+    }
+
+    .modal-desc-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.85rem;
+      background: var(--bg-card);
+      padding: 0.9rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-meta-item-label {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .modal-meta-item-value {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Iframe Player Modal */
+    .player-dialog {
+      width: 95vw;
+      height: 90vh;
+      max-width: 1100px;
+      background: #000;
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .player-header {
+      height: 48px;
+      background: var(--bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .player-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #000;
+    }
+
+    /* Info Modals (Privacy, Terms, About, Contact) */
+    .info-modal-body {
+      padding: 2rem;
+      max-height: 75vh;
+      overflow-y: auto;
+      line-height: 1.7;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .info-modal-body h3 {
+      color: var(--text-main);
+      margin: 1.25rem 0 0.5rem;
+    }
+
+    .info-modal-body p {
+      margin-bottom: 0.85rem;
+    }
+
+    /* ==========================================================================
+       8. TOAST NOTIFICATIONS & BACK TO TOP
+       ========================================================================== */
+    .toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: auto;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast-success { border-left: 4px solid var(--accent-green); }
+    .toast-error { border-left: 4px solid var(--accent-red); }
+    .toast-info { border-left: 4px solid var(--primary); }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 1.5rem;
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-full);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      box-shadow: var(--shadow-md);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .back-to-top:hover {
+      background: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       9. FOOTER
+       ========================================================================== */
+    .site-footer {
+      margin-top: auto;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-color);
+      padding: 3rem 0 2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr;
+      }
+    }
+
+    .footer-brand p {
+      margin-top: 0.75rem;
+      max-width: 320px;
+      line-height: 1.5;
+    }
+
+    .footer-links-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-nav a:hover {
+      color: var(--accent-cyan);
+    }
+
+    .footer-bottom {
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    @media (min-width: 640px) {
+      .search-bar-row {
+        flex-direction: row;
+      }
+      .desktop-nav {
+        display: flex;
+      }
+      .mobile-menu-btn {
+        display: none;
+      }
+      .hero-title {
+        font-size: 2.25rem;
+      }
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="container header-content">
+      <a href="#home" class="brand-logo" id="logoLink">
+        <div class="brand-icon">
+          <!-- Gamepad SVG Icon -->
+          <svg class="icon" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5S17.67 9 18.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+        </div>
+        <span class="brand-text">Game<span>Zone</span></span>
+      </a>
+
+      <nav class="desktop-nav">
+        <a href="#home" class="nav-link active" data-target="home">Home</a>
+        <a href="#catalogue" class="nav-link" data-target="catalogue">Games</a>
+        <a href="#favourites" class="nav-link" data-target="favourites">Favourites</a>
+        <a href="#recent" class="nav-link" data-target="recent">Recently Played</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="mobile-menu-btn" id="mobileMenuOpenBtn" aria-label="Open mobile menu">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer-overlay" id="drawerOverlay"></div>
+  <aside class="mobile-drawer" id="mobileDrawer" aria-label="Mobile Navigation">
+    <div class="drawer-header">
+      <span class="brand-logo"><span class="brand-text">Game<span>Zone</span></span></span>
+      <button id="mobileMenuCloseBtn" aria-label="Close menu">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="#home" class="drawer-link active" data-target="home">Home</a>
+      <a href="#catalogue" class="drawer-link" data-target="catalogue">All Games</a>
+      <a href="#favourites" class="drawer-link" data-target="favourites">Favourites</a>
+      <a href="#recent" class="drawer-link" data-target="recent">Recently Played</a>
+      <a href="#about" class="drawer-info-link" data-modal="about">About GameZone</a>
+      <a href="#privacy" class="drawer-info-link" data-modal="privacy">Privacy Policy</a>
+      <a href="#terms" class="drawer-info-link" data-modal="terms">Terms of Service</a>
+      <a href="#contact" class="drawer-info-link" data-modal="contact">Contact</a>
+    </nav>
+  </aside>
+
+  <!-- MAIN VIEWPORT -->
+  <main class="container" id="home">
+
+    <!-- Header Ad Placement Slot -->
+    <div id="adHeaderSlot" class="ad-slot-wrapper ad-slot-header" style="display:none;">
+      <div class="ad-container" id="adContainerHeader">
+        <span class="ad-label">Advertisement</span>
+        <!-- Insert Adsterra / Partner script for Header here -->
+        <script src="https://pl32107581.profitableratecpmnetwork.com/7a/4c/8d/7a4c8db48e846b3eec05ae8642b77b04.js"></script>
+        <div class="ad-placeholder-text">Header Ad Placement [728x90]</div>
+      </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="heroSection">
+      <div class="hero-banner" id="heroBanner">
+        <img src="" alt="Featured Game" class="hero-bg" id="heroBg">
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+          <span class="hero-tag" id="heroBadge">Featured Title</span>
+          <h1 class="hero-title" id="heroTitle">Featured Game Loading...</h1>
+          <p class="hero-desc" id="heroDesc">Loading the newest high-octane gaming experience...</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="heroPlayBtn">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <span>Play Featured</span>
+            </button>
+            <button class="btn btn-secondary" id="heroDetailsBtn">Game Details</button>
+          </div>
+        </div>
+        <div class="hero-controls" id="heroControls" style="display:none;">
+          <button class="hero-ctrl-btn" id="heroPrevBtn" aria-label="Previous featured game">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+          </button>
+          <button class="hero-ctrl-btn" id="heroNextBtn" aria-label="Next featured game">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Post-Hero Ad Slot -->
+    <div id="adHeroSlot" class="ad-slot-wrapper ad-slot-hero" style="display:none;">
+      <div class="ad-container" id="adContainerHero">
+        <span class="ad-label">Advertisement</span>
+        <!-- Insert Adsterra / Partner script for Post-Hero here -->
+        <div class="ad-placeholder-text">Post-Hero Ad Placement [728x90 / Responsive]</div>
+      </div>
+    </div>
+
+    <!-- RECENTLY PLAYED SECTION -->
+    <section class="section-block" id="recent" style="display:none;">
+      <div class="section-header">
+        <h2 class="section-title">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 0-18zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+          Recently Played
+        </h2>
+        <button class="btn btn-secondary btn-sm" id="clearRecentBtn">Clear History</button>
+      </div>
+      <div class="games-grid" id="recentGrid"></div>
+    </section>
+
+    <!-- FAVOURITES SECTION -->
+    <section class="section-block" id="favourites" style="display:none;">
+      <div class="section-header">
+        <h2 class="section-title">
+          <svg class="icon" style="color:#ef4444;" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          My Favourites
+        </h2>
+      </div>
+      <div class="games-grid" id="favouritesGrid"></div>
+    </section>
+
+    <!-- SEARCH & DISCOVERY CATALOGUE SECTION -->
+    <section class="section-block" id="catalogue">
+      <div class="search-filter-section">
+        <div class="search-bar-row">
+          <div class="search-input-wrapper">
+            <svg class="icon search-icon-inside" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <input type="text" id="searchInput" class="search-input" placeholder="Search by game title, category, or tag..." autocomplete="off">
+            <button class="clear-search-btn" id="clearSearchBtn" aria-label="Clear search">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+            </button>
+          </div>
+          <div class="sort-wrapper">
+            <select id="sortSelect" class="sort-select" aria-label="Sort games">
+              <option value="featured">Featured First</option>
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="alpha-asc">Title: A to Z</option>
+              <option value="alpha-desc">Title: Z to A</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Categories bar -->
+        <div class="categories-bar-wrapper">
+          <div class="categories-nav" id="categoriesBar">
+            <!-- Dynamic Category Chips Inserted via JS -->
+          </div>
+        </div>
+
+        <div class="results-meta">
+          <span id="resultsCount">Showing all games</span>
+        </div>
+      </div>
+
+      <!-- MAIN CATALOGUE GRID -->
+      <div class="games-grid" id="catalogueGrid">
+        <!-- Rendered Game Cards -->
+      </div>
+
+      <!-- Inter-Catalogue Ad Slot -->
+      <div id="adCatalogueSlot" class="ad-slot-wrapper ad-slot-catalogue" style="display:none;">
+        <div class="ad-container" id="adContainerCatalogue">
+          <span class="ad-label">Advertisement</span>
+          <!-- Insert Adsterra / Partner script for Mid-Catalogue here -->
+          <div class="ad-placeholder-text">Mid-Catalogue In-Feed Ad [728x90]</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Pre-Ad Slot -->
+    <div id="adFooterSlot" class="ad-slot-wrapper ad-slot-footer" style="display:none;">
+      <div class="ad-container" id="adContainerFooter">
+        <span class="ad-label">Advertisement</span>
+        <!-- Insert Adsterra / Partner script for Footer here -->
+        <div class="ad-placeholder-text">Pre-Footer Ad Banner [728x90]</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       MODALS: GAME DETAILS, PLAYER, AND POLICIES
+       ========================================================================== -->
+
+  <!-- 1. Game Details Modal -->
+  <div class="modal-backdrop" id="gameDetailsModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close dialog">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+      <div class="modal-hero-cover">
+        <img src="" alt="Game Banner" class="modal-cover-img" id="modalCoverImg">
+        <div class="modal-cover-gradient"></div>
+      </div>
+      <div class="modal-content-body">
+        <div class="modal-header-info">
+          <div>
+            <h2 class="modal-title" id="modalTitle">Game Title</h2>
+            <div class="modal-category" id="modalCategory">Arcade</div>
+          </div>
+          <button class="card-fav-btn" id="modalFavBtn" style="position:static;" aria-label="Add to favourites">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+        </div>
+
+        <div class="modal-actions-row">
+          <button class="btn btn-primary" id="modalUnlockPlayBtn" style="flex:1;">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <span id="modalPlayBtnText">Unlock to Play</span>
+          </button>
+          <button class="btn btn-secondary" id="modalShareBtn">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+            Share
+          </button>
+        </div>
+
+        <!-- Ad Slot inside Details Popup -->
+        <div id="adPopupSlot" class="ad-slot-wrapper" style="margin:0.5rem 0 1.5rem; display:none;">
+          <div class="ad-container" id="adContainerPopup">
+            <span class="ad-label">Sponsor</span>
+            <div class="ad-placeholder-text">Modal Box Ad [300x250]</div>
+          </div>
+        </div>
+
+        <div class="modal-meta-grid">
+          <div class="modal-meta-item">
+            <div class="modal-meta-item-label">Release Date</div>
+            <div class="modal-meta-item-value" id="modalReleaseDate">2026</div>
+          </div>
+          <div class="modal-meta-item">
+            <div class="modal-meta-item-label">Controls</div>
+            <div class="modal-meta-item-value" id="modalControls">Touch, Mouse</div>
+          </div>
+          <div class="modal-meta-item">
+            <div class="modal-meta-item-label">Status</div>
+            <div class="modal-meta-item-value" id="modalStatus">Available</div>
+          </div>
+        </div>
+
+        <h3 class="modal-section-h">About the Game</h3>
+        <p class="modal-desc-text" id="modalDescription">Game description goes here.</p>
+
+        <h3 class="modal-section-h">Instructions</h3>
+        <p class="modal-desc-text" id="modalInstructions">Use mouse or touch controls to navigate.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Embedded Iframe Player Modal -->
+  <div class="modal-backdrop" id="iframePlayerModal" role="dialog" aria-modal="true">
+    <div class="player-dialog">
+      <div class="player-header">
+        <strong id="playerGameTitle">Game Player</strong>
+        <button id="playerCloseBtn" class="btn btn-secondary btn-sm">Close Player</button>
+      </div>
+      <iframe id="gameIframe" class="player-iframe" src="" allow="accelerometer; autoplay; fullscreen; payment; geolocation" sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"></iframe>
+    </div>
+  </div>
+
+  <!-- 3. Policy & Information Modal -->
+  <div class="modal-backdrop" id="infoModal" role="dialog" aria-modal="true">
+    <div class="modal-dialog">
+      <button class="modal-close-btn" id="infoModalCloseBtn" aria-label="Close">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+      <div class="info-modal-body" id="infoModalBody">
+        <!-- Injected via JS based on selected policy -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Floating Back to Top Button -->
+  <button class="back-to-top" id="backToTopBtn" aria-label="Back to top">
+    <svg class="icon" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+  </button>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#home" class="brand-logo">
+            <div class="brand-icon">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5S17.67 9 18.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+            </div>
+            <span class="brand-text">Game<span>Zone</span></span>
+          </a>
+          <p>Your central destination for premium, unblocked, lightweight online web games. Play directly in your browser on phone, tablet, or desktop.</p>
+        </div>
+        <div>
+          <div class="footer-links-title">Navigation</div>
+          <div class="footer-nav">
+            <a href="#home">Home Portal</a>
+            <a href="#catalogue">Full Catalogue</a>
+            <a href="#favourites">Favourites</a>
+            <a href="#recent">Recently Played</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-links-title">Legal & Info</div>
+          <div class="footer-nav">
+            <a href="#about" class="info-link" data-modal="about">About GameZone</a>
+            <a href="#privacy" class="info-link" data-modal="privacy">Privacy Policy</a>
+            <a href="#terms" class="info-link" data-modal="terms">Terms of Service</a>
+            <a href="#contact" class="info-link" data-modal="contact">Contact Support</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; <span id="currentYear"></span> GameZone. Hosted statically via GitHub Pages.</div>
+        <div>Developed by mridupaban sonowal with ❤️.</div>
+        <div>All game trademarks belong to their respective developers.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       JAVASCRIPT: CONFIGURATION, CORE ENGINE & ARCHITECTURE
+       ========================================================================== -->
+  <script>
+    /**
+     * ============================================================================
+     * CENTRAL CONFIGURATION SECTION
+     * Easily customize your GameZone platform, catalogue, and monetization below.
+     * ============================================================================
+     */
+    const siteConfig = {
+      siteName: "GameZone",
+      siteTagline: "Premium Online Web Games",
+      recentLimit: 8,
+      defaultFallbackImage: "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22260%22%20viewBox%3D%220%200%20400%20260%22%3E%3Crect%20fill%3D%22%23161f30%22%20width%3D%22400%22%20height%3D%22260%22%2F%3E%3Ctext%20fill%3D%22%233b82f6%22%20font-family%3D%22sans-serif%22%20font-size%3D%2220%22%20font-weight%3D%22bold%22%20x%3D%2250%25%22%20y%3D%2250%25%22%20text-anchor%3D%22middle%22%20dominant-baseline%3D%22middle%22%3EGameZone%20Game%3C%2Ftext%3E%3C%2Fsvg%3E"
+    };
+
+    /**
+     * ============================================================================
+     * ADVERTISING CONFIGURATION (ADSTERRA & NETWORKS)
+     * To activate ads:
+     * 1. Change `enabled: true`.
+     * 2. Toggle placements on/off.
+     * 3. Insert official publisher script tags inside containers marked `adContainer...`
+     * ============================================================================
+     */
+    const adConfig = {
+      enabled: true, // Set to true when you insert your live ad scripts
+      provider: "adsterra",
+      placements: {
+        header: false,
+        hero: false,
+        catalogue: false,
+        popup: false,
+        footer: false
+      },
+      rewarded: {
+        enabled: false,          // Keep false until official rewarded SDK is integrated
+        providerSupported: false // Set to true only if your provider has an active JS reward callback SDK
+      }
+    };
+
+    /**
+     * ============================================================================
+     * CENTRAL GAME CATALOGUE
+     * HOW TO ADD A NEW GAME:
+     * Simply copy one object block, paste it into the array, and update:
+     * - id: Unique lowercase string (e.g., "cyber-runner")
+     * - title: Game title
+     * - category: Arcade, Action, Puzzle, Racing, Strategy, Adventure, etc.
+     * - thumbnail: imgbb direct image URL (https://i.ibb.co/...)
+     * - banner: imgbb direct banner URL (or leave identical to thumbnail)
+     * - gameUrl: Destination https URL where your game is hosted
+     * - launchMode: "new-tab", "same-tab", or "iframe"
+     * - status: "available" or "coming-soon"
+     * - featured: true or false
+     * - isNew: true or false
+     * - rewardRequired: true or false
+     * ============================================================================
+     */
+    const games = [
+      {
+        id: "neon-patrol",
+        title: "Neon Patrol: Rogue Sky",
+        description: "Engage in supersonic aerial dogfights over a radiant cybernetic metropolis. Blast enemy drones and upgrade plasma weapons.",
+        category: "Arcade",
+        tags: ["arcade", "action", "shooting", "neon", "flight"],
+        thumbnail: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80",
+        banner: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80",
+        gameUrl: "https://example.com/games/neon-patrol/",
+        launchMode: "new-tab",
+        status: "available",
+        featured: true,
+        isNew: true,
+        instructions: "Desktop: Use WASD/Arrow keys to maneuver, Space to fire lasers. Mobile: Drag screen to guide ship, auto-fires.",
+        controls: ["Touch", "Keyboard", "Mouse"],
+        releaseDate: "2026-03-15",
+        rewardRequired: false
+      },
+      {
+        id: "quantum-puzzle-box",
+        title: "Quantum Paradox",
+        description: "Manipulate timeline portals, align subatomic prisms, and solve mind-bending multi-dimensional light puzzles.",
+        category: "Puzzle",
+        tags: ["puzzle", "brain", "quantum", "relaxing"],
+        thumbnail: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+        banner: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80",
+        gameUrl: "https://example.com/games/quantum-paradox/",
+        launchMode: "new-tab",
+        status: "coming-soon",
+        featured: true,
+        isNew: false,
+        instructions: "Click or tap prism nodes to reflect light streams into core receptors.",
+        controls: ["Touch", "Mouse"],
+        releaseDate: "2026-01-20",
+        rewardRequired: false
+      },
+      {
+        id: "velocity-drift-x",
+        title: "Velocity Drift: Heat",
+        description: "High-speed arcade street drifting through winding mountain passes and neon-drenched downtown highways.",
+        category: "Racing",
+        tags: ["racing", "cars", "drift", "speed"],
+        thumbnail: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=600&q=80",
+        banner: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=1200&q=80",
+        gameUrl: "https://example.com/games/velocity-drift/",
+        launchMode: "new-tab",
+        status: "coming-soon",
+        featured: false,
+        isNew: true,
+        instructions: "Up/W: Accelerate, Down/S: Brake/Reverse, Left/Right: Steer, Shift: Nitro Boost.",
+        controls: ["Keyboard", "Touch"],
+        releaseDate: "2026-02-28",
+        rewardRequired: false
+      },
+      {
+        id: "dungeon-blade-echoes",
+        title: "Echoes of the Blade",
+        description: "A fast-paced rogue-lite hack and slash adventure through treacherous procedurally generated subterranean crypts.",
+        category: "Action",
+        tags: ["action", "rpg", "roguelike", "sword"],
+        thumbnail: "https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?auto=format&fit=crop&w=600&q=80",
+        banner: "https://images.unsplash.com/photo-1579373903781-fd5c0c30c4cd?auto=format&fit=crop&w=1200&q=80",
+        gameUrl: "https://example.com/games/echoes-blade/",
+        launchMode: "new-tab",
+        status: "coming-soon",
+        featured: true,
+        isNew: false,
+        instructions: "Attack with Left Mouse Button, Dash with Space, Move with WASD.",
+        controls: ["Mouse", "Keyboard"],
+        releaseDate: "2025-11-12",
+        rewardRequired: false
+      },
+      {
+        id: "cyber-tactics-2088",
+        title: "Cyber Tactics 2088",
+        description: "Command tactical squads of specialized cybernetic operatives in turn-based grid warfare against rogue AI synthetics.",
+        category: "Strategy",
+        tags: ["strategy", "turn-based", "tactics", "cyberpunk"],
+        thumbnail: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80",
+        banner: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80",
+        gameUrl: "https://example.com/games/cyber-tactics/",
+        launchMode: "new-tab",
+        status: "coming-soon",
+        featured: false,
+        isNew: false,
+        instructions: "Select unit to view move range, click enemy to lock aim and choose weapon payload.",
+        controls: ["Mouse", "Touch"],
+        releaseDate: "2025-09-04",
+        rewardRequired: false
+      },
+      {
+        id: "star-runner-infinite",
+        title: "Star Runner: Infinite",
+        description: "Sprint across fractured celestial platforms, dodge gravity anomalies, and gather rare dark matter shards.",
+        category: "Arcade",
+        tags: ["arcade", "runner", "space", "jumping"],
+        thumbnail: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80",
+        banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1200&q=80",
+        gameUrl: "https://example.com/games/star-runner/",
+        launchMode: "new-tab",
+        status: "coming-soon",
+        featured: false,
+        isNew: true,
+        instructions: "Tap screen or Spacebar to jump. Double tap for aerial jump boost.",
+        controls: ["Touch", "Keyboard"],
+        releaseDate: "2026-03-01",
+        rewardRequired: false
+      },
+      {
+        id: "mystic-isle-odyssey",
+        title: "Mystic Isle Odyssey",
+        description: "Embark on an open-world isometric exploration game unraveling the forgotten ancient secrets of Sunken Ruins.",
+        category: "Adventure",
+        tags: ["adventure", "exploration", "fantasy", "story"],
+        thumbnail: "https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?auto=format&fit=crop&w=600&q=80",
+        banner: "https://images.unsplash.com/photo-1518709766631-a6a7f45921c3?auto=format&fit=crop&w=1200&q=80",
+        gameUrl: "https://example.com/games/mystic-isle/",
+        launchMode: "new-tab",
+        status: "coming-soon",
+        featured: false,
+        isNew: false,
+        instructions: "Coming soon to GameZone. Gameplay controls will be released alongside launch.",
+        controls: ["Touch", "Keyboard", "Gamepad"],
+        releaseDate: "2026-06-15",
+        rewardRequired: false
+      },
+      {
+        id: "block-crush-galaxy",
+        title: "Block Crush Galaxy",
+        description: "Cascading cosmic puzzle mechanics. Match radiant constellations and trigger massive chain reaction combos.",
+        category: "Puzzle",
+        tags: ["puzzle", "match3", "casual", "blocks"],
+        thumbnail: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80",
+        banner: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1200&q=80",
+        gameUrl: "https://example.com/games/block-crush/",
+        launchMode: "new-tab",
+        status: "coming-soon",
+        featured: false,
+        isNew: false,
+        instructions: "Swap adjacent star blocks horizontally or vertically to form combinations of three or more.",
+        controls: ["Touch", "Mouse"],
+        releaseDate: "2025-10-18",
+        rewardRequired: false
+      }
+    ];
+
+    /**
+     * ============================================================================
+     * REWARD PROVIDER ADAPTER (Strict Architectural Pattern)
+     * No fake callbacks or simulated watch completions.
+     * If provider is unavailable, system disables reward barriers safely.
+     * ============================================================================
+     */
+    const RewardProvider = {
+      isAvailable() {
+        return Boolean(adConfig.enabled && adConfig.rewarded.enabled && adConfig.rewarded.providerSupported && window.officialRewardSDK);
+      },
+      showRewardedAd() {
+        return new Promise((resolve, reject) => {
+          if (!this.isAvailable()) {
+            reject(new Error("Rewarded advertising provider is not configured or available."));
+            return;
+          }
+          /**
+           * When you hook into an official rewarded ad SDK (e.g. Adsterra, Google AdSense for Games):
+           * Call their official reward trigger here and only resolve upon verified completion callback.
+           */
+          try {
+            window.officialRewardSDK.showAd({
+              onRewarded: () => resolve(true),
+              onDismissed: () => reject(new Error("Reward was not completed.")),
+              onError: (err) => reject(err)
+            });
+          } catch (e) {
+            reject(e);
+          }
+        });
+      }
+    };
+
+    /**
+     * ============================================================================
+     * STATE MANAGEMENT & STORAGE SYSTEM
+     * ============================================================================
+     */
+    const AppState = {
+      activeCategory: "All Games",
+      searchQuery: "",
+      sortBy: "featured",
+      featuredGames: [],
+      currentFeaturedIndex: 0,
+      activeModalGame: null,
+      favourites: [],
+      recentHistory: []
+    };
+
+    const Storage = {
+      FAV_KEY: "gamezone_user_favourites",
+      RECENT_KEY: "gamezone_user_recent",
+
+      getFavourites() {
+        try {
+          const val = localStorage.getItem(this.FAV_KEY);
+          return val ? JSON.parse(val) : [];
+        } catch (e) {
+          return [];
+        }
+      },
+      saveFavourites(list) {
+        try {
+          localStorage.setItem(this.FAV_KEY, JSON.stringify(list));
+        } catch (e) {}
+      },
+      getRecent() {
+        try {
+          const val = localStorage.getItem(this.RECENT_KEY);
+          return val ? JSON.parse(val) : [];
+        } catch (e) {
+          return [];
+        }
+      },
+      saveRecent(list) {
+        try {
+          localStorage.setItem(this.RECENT_KEY, JSON.stringify(list));
+        } catch (e) {}
+      }
+    };
+
+    /**
+     * ============================================================================
+     * TOAST NOTIFICATION ENGINE
+     * ============================================================================
+     */
+    function showToast(message, type = "info") {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className = `toast toast-${type}`;
+      
+      let iconMarkup = '<svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>';
+      if (type === "success") {
+        iconMarkup = '<svg class="icon" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
+      } else if (type === "error") {
+        iconMarkup = '<svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>';
+      }
+
+      toast.innerHTML = `${iconMarkup}<span>${escapeHTML(message)}</span>`;
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => toast.classList.add("show"));
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 300);
+      }, 3400);
+    }
+
+    /**
+     * ============================================================================
+     * UTILITY FUNCTIONS & SECURITY VALIDATION
+     * ============================================================================
+     */
+    function escapeHTML(str) {
+      if (!str) return "";
+      const div = document.createElement("div");
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function isValidHttpsUrl(string) {
+      try {
+        const url = new URL(string);
+        return url.protocol === "https:";
+      } catch (_) {
+        return false;
+      }
+    }
+
+    /**
+     * ============================================================================
+     * ADVERTISEMENT INITIALIZATION
+     * ============================================================================
+     */
+    function initAdvertisements() {
+      if (!adConfig.enabled) return;
+
+      const p = adConfig.placements;
+      if (p.header) document.getElementById("adHeaderSlot").style.display = "flex";
+      if (p.hero) document.getElementById("adHeroSlot").style.display = "flex";
+      if (p.catalogue) document.getElementById("adCatalogueSlot").style.display = "flex";
+      if (p.popup) document.getElementById("adPopupSlot").style.display = "flex";
+      if (p.footer) document.getElementById("adFooterSlot").style.display = "flex";
+    }
+
+    /**
+     * ============================================================================
+     * HERO SECTION MANAGEMENT
+     * ============================================================================
+     */
+    function initHero() {
+      AppState.featuredGames = games.filter(g => g.featured && g.status === "available");
+      if (AppState.featuredGames.length === 0) {
+        AppState.featuredGames = games.filter(g => g.status === "available");
+      }
+
+      const controls = document.getElementById("heroControls");
+      if (AppState.featuredGames.length > 1) {
+        controls.style.display = "flex";
+      }
+
+      renderHeroGame(0);
+    }
+
+    function renderHeroGame(index) {
+      if (!AppState.featuredGames || AppState.featuredGames.length === 0) return;
+      if (index < 0) index = AppState.featuredGames.length - 1;
+      if (index >= AppState.featuredGames.length) index = 0;
+      AppState.currentFeaturedIndex = index;
+
+      const game = AppState.featuredGames[index];
+      const heroBg = document.getElementById("heroBg");
+      const heroTitle = document.getElementById("heroTitle");
+      const heroDesc = document.getElementById("heroDesc");
+      const heroBadge = document.getElementById("heroBadge");
+
+      heroTitle.textContent = game.title;
+      heroDesc.textContent = game.description;
+      heroBadge.textContent = `${game.category} • Featured`;
+
+      heroBg.onerror = () => { heroBg.src = siteConfig.defaultFallbackImage; };
+      heroBg.src = game.banner || game.thumbnail || siteConfig.defaultFallbackImage;
+
+      const playBtn = document.getElementById("heroPlayBtn");
+      const detailsBtn = document.getElementById("heroDetailsBtn");
+
+      playBtn.onclick = () => openGameModal(game.id);
+      detailsBtn.onclick = () => openGameModal(game.id);
+    }
+
+    /**
+     * ============================================================================
+     * CATEGORIES & FILTERING
+     * ============================================================================
+     */
+    function initCategories() {
+      const container = document.getElementById("categoriesBar");
+      const dynamicCats = new Set(["All Games"]);
+
+      games.forEach(g => {
+        if (g.category && g.category.trim()) {
+          dynamicCats.add(g.category.trim());
+        }
+      });
+
+      container.innerHTML = "";
+      dynamicCats.forEach(catName => {
+        const chip = document.createElement("button");
+        chip.className = `category-chip ${catName === AppState.activeCategory ? "active" : ""}`;
+        chip.textContent = catName;
+        chip.addEventListener("click", () => {
+          AppState.activeCategory = catName;
+          document.querySelectorAll(".category-chip").forEach(c => c.classList.remove("active"));
+          chip.classList.add("active");
+          applyFiltersAndRender();
+        });
+        container.appendChild(chip);
+      });
+    }
+
+    /**
+     * ============================================================================
+     * CATALOGUE FILTERING, SORTING & RENDERING
+     * ============================================================================
+     */
+    function getFilteredGames() {
+      let filtered = games.slice();
+
+      // Category filter
+      if (AppState.activeCategory !== "All Games") {
+        filtered = filtered.filter(g => g.category && g.category.toLowerCase() === AppState.activeCategory.toLowerCase());
+      }
+
+      // Instant search filter (title, description, category, tags)
+      if (AppState.searchQuery.trim().length > 0) {
+        const q = AppState.searchQuery.trim().toLowerCase();
+        filtered = filtered.filter(g => {
+          const inTitle = g.title.toLowerCase().includes(q);
+          const inDesc = g.description && g.description.toLowerCase().includes(q);
+          const inCat = g.category && g.category.toLowerCase().includes(q);
+          const inTags = Array.isArray(g.tags) && g.tags.some(t => t.toLowerCase().includes(q));
+          return inTitle || inDesc || inCat || inTags;
+        });
+      }
+
+      // Sorting
+      switch (AppState.sortBy) {
+        case "newest":
+          filtered.sort((a, b) => new Date(b.releaseDate || 0) - new Date(a.releaseDate || 0));
+          break;
+        case "oldest":
+          filtered.sort((a, b) => new Date(a.releaseDate || 0) - new Date(b.releaseDate || 0));
+          break;
+        case "alpha-asc":
+          filtered.sort((a, b) => a.title.localeCompare(b.title));
+          break;
+        case "alpha-desc":
+          filtered.sort((a, b) => b.title.localeCompare(a.title));
+          break;
+        case "featured":
+        default:
+          filtered.sort((a, b) => (b.featured === true ? 1 : 0) - (a.featured === true ? 1 : 0));
+          break;
+      }
+
+      return filtered;
+    }
+
+    function applyFiltersAndRender() {
+      const filtered = getFilteredGames();
+      const grid = document.getElementById("catalogueGrid");
+      const countEl = document.getElementById("resultsCount");
+
+      countEl.textContent = `Showing ${filtered.length} ${filtered.length === 1 ? "game" : "games"}`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">🔍</div>
+            <h3 class="empty-title">No games found</h3>
+            <p class="empty-subtitle">We couldn't find matches for "${escapeHTML(AppState.searchQuery)}". Try searching another term or choosing another category.</p>
+            <button class="btn btn-secondary btn-sm" id="resetFiltersBtn">Reset Filters</button>
+          </div>
+        `;
+        const resetBtn = document.getElementById("resetFiltersBtn");
+        if (resetBtn) {
+          resetBtn.addEventListener("click", () => {
+            document.getElementById("searchInput").value = "";
+            AppState.searchQuery = "";
+            AppState.activeCategory = "All Games";
+            document.getElementById("clearSearchBtn").classList.remove("visible");
+            initCategories();
+            applyFiltersAndRender();
+          });
+        }
+        return;
+      }
+
+      grid.innerHTML = "";
+      filtered.forEach(game => {
+        grid.appendChild(createGameCardElement(game));
+      });
+    }
+
+    /**
+     * Card Generation Factory
+     */
+    function createGameCardElement(game) {
+      const card = document.createElement("article");
+      card.className = "game-card";
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", `View game details for ${game.title}`);
+
+      const isFav = AppState.favourites.includes(game.id);
+
+      let badgesHtml = "";
+      if (game.status === "coming-soon") {
+        badgesHtml += '<span class="badge badge-coming">Soon</span>';
+      } else {
+        if (game.featured) badgesHtml += '<span class="badge badge-featured">Featured</span>';
+        if (game.isNew) badgesHtml += '<span class="badge badge-new">New</span>';
+      }
+
+      card.innerHTML = `
+        <div class="card-thumb-wrapper">
+          <div class="card-badges">${badgesHtml}</div>
+          <button class="card-fav-btn ${isFav ? 'favorited' : ''}" data-fav-id="${game.id}" aria-label="Favourite game">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </button>
+          <img class="card-thumb" src="${siteConfig.defaultFallbackImage}" data-src="${escapeHTML(game.thumbnail)}" alt="${escapeHTML(game.title)}" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="card-category">${escapeHTML(game.category || "Game")}</div>
+          <h3 class="card-title">${escapeHTML(game.title)}</h3>
+          <p class="card-desc">${escapeHTML(game.description)}</p>
+        </div>
+      `;
+
+      // Lazy load with error fallback handling
+      const img = card.querySelector(".card-thumb");
+      const realSrc = img.getAttribute("data-src");
+      if (realSrc) {
+        const temp = new Image();
+        temp.onload = () => { img.src = realSrc; };
+        temp.onerror = () => { img.src = siteConfig.defaultFallbackImage; };
+        temp.src = realSrc;
+      }
+
+      // Card click opens modal
+      card.addEventListener("click", (e) => {
+        if (e.target.closest(".card-fav-btn")) return;
+        openGameModal(game.id);
+      });
+
+      // Keyboard accessibility
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openGameModal(game.id);
+        }
+      });
+
+      // Fav icon button inside card
+      const favBtn = card.querySelector(".card-fav-btn");
+      favBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        toggleFavourite(game.id);
+      });
+
+      return card;
+    }
+
+    /**
+     * ============================================================================
+     * FAVOURITES & RECENTLY PLAYED LOGIC
+     * ============================================================================
+     */
+    function toggleFavourite(gameId) {
+      const idx = AppState.favourites.indexOf(gameId);
+      const game = games.find(g => g.id === gameId);
+      const title = game ? game.title : "Game";
+
+      if (idx > -1) {
+        AppState.favourites.splice(idx, 1);
+        showToast(`Removed "${title}" from Favourites`, "info");
+      } else {
+        AppState.favourites.push(gameId);
+        showToast(`Saved "${title}" to Favourites!`, "success");
+      }
+
+      Storage.saveFavourites(AppState.favourites);
+      updateFavUI();
+      renderFavouritesSection();
+    }
+
+    function updateFavUI() {
+      document.querySelectorAll(".card-fav-btn").forEach(btn => {
+        const id = btn.getAttribute("data-fav-id");
+        if (id && AppState.favourites.includes(id)) {
+          btn.classList.add("favorited");
+        } else {
+          btn.classList.remove("favorited");
+        }
+      });
+
+      const modalFav = document.getElementById("modalFavBtn");
+      if (AppState.activeModalGame) {
+        if (AppState.favourites.includes(AppState.activeModalGame.id)) {
+          modalFav.classList.add("favorited");
+        } else {
+          modalFav.classList.remove("favorited");
+        }
+      }
+    }
+
+    function renderFavouritesSection() {
+      const section = document.getElementById("favourites");
+      const grid = document.getElementById("favouritesGrid");
+
+      if (AppState.favourites.length === 0) {
+        section.style.display = "none";
+        grid.innerHTML = "";
+        return;
+      }
+
+      section.style.display = "block";
+      grid.innerHTML = "";
+      const favGames = games.filter(g => AppState.favourites.includes(g.id));
+      favGames.forEach(g => grid.appendChild(createGameCardElement(g)));
+    }
+
+    function recordRecentlyPlayed(gameId) {
+      AppState.recentHistory = AppState.recentHistory.filter(id => id !== gameId);
+      AppState.recentHistory.unshift(gameId);
+
+      if (AppState.recentHistory.length > siteConfig.recentLimit) {
+        AppState.recentHistory = AppState.recentHistory.slice(0, siteConfig.recentLimit);
+      }
+
+      Storage.saveRecent(AppState.recentHistory);
+      renderRecentlyPlayedSection();
+    }
+
+    function renderRecentlyPlayedSection() {
+      const section = document.getElementById("recent");
+      const grid = document.getElementById("recentGrid");
+
+      if (AppState.recentHistory.length === 0) {
+        section.style.display = "none";
+        grid.innerHTML = "";
+        return;
+      }
+
+      section.style.display = "block";
+      grid.innerHTML = "";
+
+      AppState.recentHistory.forEach(id => {
+        const game = games.find(g => g.id === id);
+        if (game) {
+          grid.appendChild(createGameCardElement(game));
+        }
+      });
+    }
+
+    /**
+     * ============================================================================
+     * MODAL & GAME LAUNCH ENGINE
+     * ============================================================================
+     */
+    function openGameModal(gameId) {
+      const game = games.find(g => g.id === gameId);
+      if (!game) {
+        showToast("Game not found in catalogue.", "error");
+        return;
+      }
+
+      AppState.activeModalGame = game;
+
+      const modal = document.getElementById("gameDetailsModal");
+      const cover = document.getElementById("modalCoverImg");
+      const title = document.getElementById("modalTitle");
+      const cat = document.getElementById("modalCategory");
+      const desc = document.getElementById("modalDescription");
+      const inst = document.getElementById("modalInstructions");
+      const rel = document.getElementById("modalReleaseDate");
+      const ctrl = document.getElementById("modalControls");
+      const stat = document.getElementById("modalStatus");
+      const btn = document.getElementById("modalUnlockPlayBtn");
+      const btnText = document.getElementById("modalPlayBtnText");
+
+      title.textContent = game.title;
+      cat.textContent = game.category || "General";
+      desc.textContent = game.description || "No description provided.";
+      inst.textContent = game.instructions || "Standard touch or mouse input.";
+      rel.textContent = game.releaseDate || "2026";
+      ctrl.textContent = Array.isArray(game.controls) ? game.controls.join(", ") : "Touch, Mouse";
+      stat.textContent = game.status === "coming-soon" ? "Coming Soon" : "Available";
+
+      cover.onerror = () => { cover.src = siteConfig.defaultFallbackImage; };
+      cover.src = game.banner || game.thumbnail || siteConfig.defaultFallbackImage;
+
+      // Button state based on status & reward configuration
+      if (game.status === "coming-soon") {
+        btn.disabled = true;
+        btn.classList.add("btn-secondary");
+        btn.classList.remove("btn-primary");
+        btnText.textContent = "Coming Soon";
+      } else {
+        btn.disabled = false;
+        btn.classList.remove("btn-secondary");
+        btn.classList.add("btn-primary");
+
+        if (game.rewardRequired && RewardProvider.isAvailable()) {
+          btnText.textContent = "Unlock to Play (Watch Ad)";
+        } else {
+          btnText.textContent = "Play Game Now";
+        }
+      }
+
+      // Update URL hash for easy direct sharing
+      history.replaceState(null, "", `#game-${game.id}`);
+
+      updateFavUI();
+      modal.classList.add("active");
+      document.body.classList.add("modal-open");
+    }
+
+    function closeGameModal() {
+      const modal = document.getElementById("gameDetailsModal");
+      modal.classList.remove("active");
+      document.body.classList.remove("modal-open");
+      AppState.activeModalGame = null;
+      if (window.location.hash.startsWith("#game-")) {
+        history.replaceState(null, "", window.location.pathname);
+      }
+    }
+
+    /**
+     * Execute Game Launch (Safe URL inspection & mode dispatcher)
+     */
+    async function executeGameLaunch(game) {
+      if (!game) return;
+
+      if (game.status === "coming-soon") {
+        showToast("This title is currently under development.", "info");
+        return;
+      }
+
+      if (!isValidHttpsUrl(game.gameUrl)) {
+        showToast("Launch blocked: Game destination must be a secure HTTPS URL.", "error");
+        return;
+      }
+
+      // Rewarded verification check
+      if (game.rewardRequired) {
+        if (RewardProvider.isAvailable()) {
+          try {
+            showToast("Loading sponsored game unlock...", "info");
+            await RewardProvider.showRewardedAd();
+            showToast("Ad completed! Unlocking game...", "success");
+          } catch (err) {
+            showToast("Rewarded access could not be confirmed.", "error");
+            return;
+          }
+        } else {
+          // If no verified reward provider exists, policy states fallback is applied
+          showToast("Starting game...", "info");
+        }
+      }
+
+      // Record in recent history
+      recordRecentlyPlayed(game.id);
+
+      // Launch mode resolution
+      const mode = game.launchMode || "new-tab";
+
+      if (mode === "iframe") {
+        closeGameModal();
+        openIframePlayer(game);
+      } else if (mode === "same-tab") {
+        window.location.href = game.gameUrl;
+      } else {
+        // Mode: new-tab (Default & Recommended)
+        const win = window.open(game.gameUrl, "_blank", "noopener,noreferrer");
+        if (!win) {
+          showToast("Pop-up was blocked. Please permit pop-ups to launch the game.", "error");
+        } else {
+          closeGameModal();
+        }
+      }
+    }
+
+    function openIframePlayer(game) {
+      const modal = document.getElementById("iframePlayerModal");
+      const title = document.getElementById("playerGameTitle");
+      const frame = document.getElementById("gameIframe");
+
+      title.textContent = game.title;
+      frame.src = game.gameUrl;
+
+      modal.classList.add("active");
+      document.body.classList.add("modal-open");
+    }
+
+    function closeIframePlayer() {
+      const modal = document.getElementById("iframePlayerModal");
+      const frame = document.getElementById("gameIframe");
+      frame.src = "about:blank";
+      modal.classList.remove("active");
+      document.body.classList.remove("modal-open");
+    }
+
+    /**
+     * Native Web Share & Clipboard Fallback
+     */
+    async function handleGameShare(game) {
+      const shareUrl = `${window.location.origin}${window.location.pathname}#game-${game.id}`;
+      const shareData = {
+        title: `${game.title} on GameZone`,
+        text: `Play ${game.title} instantly in your browser on GameZone!`,
+        url: shareUrl
+      };
+
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        try {
+          await navigator.share(shareData);
+          showToast("Game shared successfully!", "success");
+          return;
+        } catch (e) {
+          if (e.name !== "AbortError") {
+            copyShareFallback(shareUrl);
+          }
+        }
+      } else {
+        copyShareFallback(shareUrl);
+      }
+    }
+
+    function copyShareFallback(url) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url)
+          .then(() => showToast("Direct link copied to clipboard!", "success"))
+          .catch(() => showToast("Could not copy link: " + url, "info"));
+      } else {
+        showToast("Game link: " + url, "info");
+      }
+    }
+
+    /**
+     * ============================================================================
+     * LEGAL & INFORMATION MODAL CONTENT
+     * ============================================================================
+     */
+    const infoModalContent = {
+      about: `
+        <h2>About GameZone</h2>
+        <p>GameZone is a modern, lightweight, static web gaming index created to deliver friction-free access to high-quality browser games without heavy runtimes or bloat.</p>
+        <h3>Direct Web Launch</h3>
+        <p>Every title in our catalogue is curated to function cleanly on mobile phones, tablets, Chromebooks, and PCs. We don't ask you for downloads, installers, or intrusive account registrations.</p>
+        <h3>Performance Focused</h3>
+        <p>Built with vanilla web technology, our portal operates smoothly without large frameworks, keeping your bandwidth free for the actual game experiences.</p>
+      `,
+      privacy: `
+        <h2>Privacy Policy</h2>
+        <p>Last updated: 2026. GameZone respects your online privacy.</p>
+        <h3>Data Collection & Local Storage</h3>
+        <p>GameZone does not store personal names, phone numbers, or passwords on external databases. We store your game favorites and recently played lists locally on your own device using browser LocalStorage.</p>
+        <h3>Third-Party Network Advertising</h3>
+        <p>We may display advertising units managed by third-party ad networks (such as Adsterra). These providers may employ standard cookies or device identifiers to serve non-personalized and personalized banner placements according to applicable privacy regulations.</p>
+        <h3>External Destination Links</h3>
+        <p>When launching games hosted across third-party domains, their independent privacy terms and cookie practices govern your session.</p>
+      `,
+      terms: `
+        <h2>Terms of Service</h2>
+        <p>By browsing GameZone, you agree to access content for personal, non-commercial enjoyment.</p>
+        <h3>Intellectual Property</h3>
+        <p>All game assets, titles, trademarks, and hosted game files are the exclusive property of their respective creators and studios. GameZone serves as an indexing and launch directory.</p>
+        <h3>Warranty Disclaimer</h3>
+        <p>This static website and links are offered "as is" without representations of perpetual uptime or uninterrupted external game availability.</p>
+      `,
+      contact: `
+        <h2>Contact Support</h2>
+        <p>Have an inquiry, a game submission, or a DMCA removal request?</p>
+        <p>Email our administrative team at: <strong>deploy8822@gmail.com</strong></p>
+        <p>Please allow 24–48 hours for our team to review catalogue requests and webmaster submissions.</p>
+      `
+    };
+
+    function openInfoModal(type) {
+      const modal = document.getElementById("infoModal");
+      const body = document.getElementById("infoModalBody");
+      body.innerHTML = infoModalContent[type] || "<p>Information unavailable.</p>";
+      modal.classList.add("active");
+      document.body.classList.add("modal-open");
+    }
+
+    function closeInfoModal() {
+      const modal = document.getElementById("infoModal");
+      modal.classList.remove("active");
+      document.body.classList.remove("modal-open");
+    }
+
+    /**
+     * ============================================================================
+     * INITIALIZATION & EVENT LISTENERS
+     * ============================================================================
+     */
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Sync dynamic dates
+      document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+      // 2. Load persistent client state
+      AppState.favourites = Storage.getFavourites();
+      AppState.recentHistory = Storage.getRecent();
+
+      // 3. Initialize components
+      initAdvertisements();
+      initHero();
+      initCategories();
+      applyFiltersAndRender();
+      renderRecentlyPlayedSection();
+      renderFavouritesSection();
+
+      // 4. Search input with instant reaction
+      const searchInput = document.getElementById("searchInput");
+      const clearSearchBtn = document.getElementById("clearSearchBtn");
+
+      searchInput.addEventListener("input", (e) => {
+        AppState.searchQuery = e.target.value;
+        if (AppState.searchQuery.length > 0) {
+          clearSearchBtn.classList.add("visible");
+        } else {
+          clearSearchBtn.classList.remove("visible");
+        }
+        applyFiltersAndRender();
+      });
+
+      clearSearchBtn.addEventListener("click", () => {
+        searchInput.value = "";
+        AppState.searchQuery = "";
+        clearSearchBtn.classList.remove("visible");
+        applyFiltersAndRender();
+        searchInput.focus();
+      });
+
+      // 5. Sort selection
+      const sortSelect = document.getElementById("sortSelect");
+      sortSelect.addEventListener("change", (e) => {
+        AppState.sortBy = e.target.value;
+        applyFiltersAndRender();
+      });
+
+      // 6. Hero navigation buttons
+      document.getElementById("heroPrevBtn").addEventListener("click", () => {
+        renderHeroGame(AppState.currentFeaturedIndex - 1);
+      });
+      document.getElementById("heroNextBtn").addEventListener("click", () => {
+        renderHeroGame(AppState.currentFeaturedIndex + 1);
+      });
+
+      // 7. Clear recent history
+      document.getElementById("clearRecentBtn").addEventListener("click", () => {
+        AppState.recentHistory = [];
+        Storage.saveRecent([]);
+        renderRecentlyPlayedSection();
+        showToast("Recently played history cleared.", "info");
+      });
+
+      // 8. Mobile drawer menu
+      const drawer = document.getElementById("mobileDrawer");
+      const overlay = document.getElementById("drawerOverlay");
+      const openDrawerBtn = document.getElementById("mobileMenuOpenBtn");
+      const closeDrawerBtn = document.getElementById("mobileMenuCloseBtn");
+
+      function openDrawer() {
+        drawer.classList.add("open");
+        overlay.classList.add("open");
+      }
+      function closeDrawer() {
+        drawer.classList.remove("open");
+        overlay.classList.remove("open");
+      }
+
+      openDrawerBtn.addEventListener("click", openDrawer);
+      closeDrawerBtn.addEventListener("click", closeDrawer);
+      overlay.addEventListener("click", closeDrawer);
+
+      document.querySelectorAll(".drawer-link").forEach(link => {
+        link.addEventListener("click", () => {
+          closeDrawer();
+          const target = link.getAttribute("data-target");
+          if (target === "favourites" && AppState.favourites.length === 0) {
+            showToast("You haven't added any games to favourites yet.", "info");
+          }
+        });
+      });
+
+      document.querySelectorAll(".drawer-info-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          closeDrawer();
+          openInfoModal(link.getAttribute("data-modal"));
+        });
+      });
+
+      // 9. Modal Interactions
+      document.getElementById("modalCloseBtn").addEventListener("click", closeGameModal);
+      document.getElementById("gameDetailsModal").addEventListener("click", (e) => {
+        if (e.target.id === "gameDetailsModal") closeGameModal();
+      });
+
+      document.getElementById("modalFavBtn").addEventListener("click", () => {
+        if (AppState.activeModalGame) {
+          toggleFavourite(AppState.activeModalGame.id);
+        }
+      });
+
+      document.getElementById("modalShareBtn").addEventListener("click", () => {
+        if (AppState.activeModalGame) {
+          handleGameShare(AppState.activeModalGame);
+        }
+      });
+
+      document.getElementById("modalUnlockPlayBtn").addEventListener("click", () => {
+        if (AppState.activeModalGame) {
+          executeGameLaunch(AppState.activeModalGame);
+        }
+      });
+
+      // 10. Player modal close
+      document.getElementById("playerCloseBtn").addEventListener("click", closeIframePlayer);
+      document.getElementById("iframePlayerModal").addEventListener("click", (e) => {
+        if (e.target.id === "iframePlayerModal") closeIframePlayer();
+      });
+
+      // 11. Info / Policy modals
+      document.querySelectorAll(".info-link").forEach(link => {
+        link.addEventListener("click", (e) => {
+          e.preventDefault();
+          openInfoModal(link.getAttribute("data-modal"));
+        });
+      });
+      document.getElementById("infoModalCloseBtn").addEventListener("click", closeInfoModal);
+      document.getElementById("infoModal").addEventListener("click", (e) => {
+        if (e.target.id === "infoModal") closeInfoModal();
+      });
+
+      // 12. Escape key global listener
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeGameModal();
+          closeIframePlayer();
+          closeInfoModal();
+          closeDrawer();
+        }
+      });
+
+      // 13. Back to Top Button
+      const backToTopBtn = document.getElementById("backToTopBtn");
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 400) {
+          backToTopBtn.classList.add("visible");
+        } else {
+          backToTopBtn.classList.remove("visible");
+        }
+      }, { passive: true });
+
+      backToTopBtn.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // 14. Deep link evaluation: ?game=id or #game-id
+      function checkDeepLink() {
+        const hash = window.location.hash;
+        const params = new URLSearchParams(window.location.search);
+        let targetId = params.get("game");
+
+        if (!targetId && hash.startsWith("#game-")) {
+          targetId = hash.replace("#game-", "");
+        }
+
+        if (targetId) {
+          const game = games.find(g => g.id === targetId);
+          if (game) {
+            openGameModal(game.id);
+          }
+        }
+      }
+
+      checkDeepLink();
+      window.addEventListener("hashchange", checkDeepLink);
+    });
+
+    /**
+     * ============================================================================
+     * GITHUB PAGES STATIC DEPLOYMENT INSTRUCTIONS:
+     * 1. Create a repository on GitHub (e.g., "gamezone").
+     * 2. Commit and push this single file as "index.html" directly into the root.
+     * 3. In your GitHub repository: Go to Settings -> Pages.
+     * 4. Under "Build and deployment", set Source to "Deploy from a branch".
+     * 5. Set branch to "main" (or "master") and folder to "/ (root)". Click Save.
+     * 6. Your portal will be live at: https://<username>.github.io/<repo>/
+     * ============================================================================
+     */
+  </script>
+</body>
+</html>
